@@ -120,6 +120,9 @@ public class ExponentialBackoffWithJitterRetryHandler : DelegatingHandler
 		var statusCode = (int)response.StatusCode;
 		var isRetryAfterPresent = response.Headers.TryGetValue(ResponseHeaders.RetryAfter, out var retryAfterValue)
 			&& retryAfterValue != null;
+
+		Console.WriteLine($"retryAfterValue: {retryAfterValue}");
+
 		TimeSpan retryAfter;
 		var isRetryAfterValid =
 			// retry on 503 if retry-after not present as typical
@@ -137,6 +140,9 @@ public class ExponentialBackoffWithJitterRetryHandler : DelegatingHandler
 					&& Math.Max((retryAfter = retryAfterDate - DateTimeOffset.UtcNow).TotalSeconds, 0) >= 0))
 				// only retry if delay is at or above retry-after value
 				&& retryAfter <= sleepDurationWithJitter);
+
+		Console.WriteLine($"sleepDurationWithJitter: {sleepDurationWithJitter}");
+		Console.WriteLine($"isRetryAfterValid: {isRetryAfterValid}");
 
 		return isRetryAfterValid;
 	}

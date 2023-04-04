@@ -435,7 +435,7 @@ public class ExponentialBackoffWithJitterRetryHandlerTests
 			new RetrySettings
 			{
 				RetryCount = 5,
-				RetryDelayInMilliseconds = 1000,
+				RetryDelayInMilliseconds = 500,
 			});
 
 		using var invoker = HttpMessageInvokerFactory.Create(
